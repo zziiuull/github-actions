@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ class TaskServiceTest {
     @InjectMocks
     private TaskService service;
 
+
     @Test
     void getTask() {
         UUID taskId = UUID.randomUUID();
@@ -30,5 +32,11 @@ class TaskServiceTest {
         when(repository.find(taskId)).thenReturn(t);
         Task task = service.getTask(taskId);
         assertThat(task).isEqualTo(t);
+    }
+
+    @Test
+    void getAllTasks() {
+        when(repository.findAll()).thenReturn(new ArrayList<>());
+        assertThat(service.getAllTasks()).isEmpty();
     }
 }
